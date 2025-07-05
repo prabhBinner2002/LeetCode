@@ -188,7 +188,6 @@ public class LinkedList {
         }
 
         prev.next = prev.next.next;
-        return;
     }
 
     public Node findMid(Node head) { // Slow Fast Approach
@@ -234,14 +233,21 @@ public class LinkedList {
 
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
+//        ll.addFirst(2);
+//        ll.addFirst(1);
+//        ll.addLast(2);
+//        ll.addLast(1);
+//        ll.add(2, 2); // 1 -> 2 -> 3 -> 4 -> 5 -> null
+//     /* ll.removeFirst(); // 2 -> 3 -> 4 -> 5 -> null
+//        ll.removeLast(); // 2 -> 3 -> 4 -> nul */
+////      ll.reverse();
+//        System.out.println(ll.checkPalindrome());
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(2);
         ll.addLast(1);
-        ll.add(2, 2); // 1 -> 2 -> 3 -> 4 -> 5 -> null
-     /* ll.removeFirst(); // 2 -> 3 -> 4 -> 5 -> null
-        ll.removeLast(); // 2 -> 3 -> 4 -> nul */
-//      ll.reverse();
+        ll.add(2, 2);
+        ll.print();
         System.out.println(ll.checkPalindrome());
+
     }
 }
