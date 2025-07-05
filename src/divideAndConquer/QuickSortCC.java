@@ -20,8 +20,8 @@ public class QuickSortCC {
             if (arr[j] <= pivot) {
                 i++;
                 int temp = arr[j];
-                arr[i] = arr[j];
                 arr[j] = arr[i];
+                arr[i] = temp;
             }
         }
 
@@ -34,7 +34,7 @@ public class QuickSortCC {
     }
 
     public static void main(String[] args) {
-        int[] arr = {6,3,9,8,2,5, -1};
+        int[] arr = {6,3,9,8,2,5};
         quickSort(arr, 0 , arr.length - 1);
         printArr(arr);
     }
