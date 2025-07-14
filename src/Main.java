@@ -1,52 +1,60 @@
-import static divideAndConquer.MergeSortCC.printArr;
-import static twoDimensinalArray.SpiralMatrix.printSpiral;
+import java.util.Scanner;
 
 public class Main {
-    public static void spiral(int[][] arr) {
-        int startCol = 0;
-        int startRow = 0;
-        int endCol = arr[0].length - 1;
-        int endRow = arr.length - 1;
 
-        while (startRow <= endRow && startCol <= endCol) {
-            for (int j = startCol; j <= endCol; j++) {
-                System.out.print(arr[startRow][j] + " ");
-            }
-            for (int i = startRow + 1; i <= endRow; i++) {
-                System.out.print(arr[i][endCol] + " ");
-            }
-            for (int j = endCol - 1; j >= startCol; j--) {
-                if (startRow == endRow) break;
-                System.out.print(arr[endRow][j] + " ");
-            }
-            for (int i = endRow - 1; i >= startRow + 1; i--) {
-                if (startCol == endCol) break;
-                System.out.print(arr[i][startCol] + " ");
-            }
-            startCol++;
-            startRow++;
-            endCol--;
-            endRow--;
+    public static void printBoard(char[][] board) {
+        System.out.println(".".repeat(15));
+        for(int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++)
+                System.out.print(board[i][j] + " ");
+            System.out.println();
         }
     }
 
-    public static void findInMatrix(int[][] arr, int key) {
-        int row = 0, col = arr[0].length - 1;
+    public static boolean nQueens(char[][] board, int row) {
+        if (row == board.length) return true;
 
-        while (row < arr.length && col >= 0) {
-            if (arr[row][col] == key) {
-                System.out.print(row + " " + col);
-                break;
-            } else if (arr[row][col] < key) {
-                row++;
-            } else {
-                col--;
+        for (int j = 0; j < board.length; j++) {
+            if (isSafe(board, row, j)) {
+                board[row][j] = 'Q';
+                if (nQueens(board, row + 1)) return true;
+                board[row][j] = 'x';
             }
         }
+
+        return false;
+    }
+
+    public static boolean isSafe(char[][] board, int row, int col) {
+        for (int i = row - 1; i >= 0; i--)
+            if (board[i][col] == 'Q') return false;
+
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--)
+            if (board[i][j] == 'Q') return false;
+
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++)
+            if (board[i][j] == 'Q') return false;
+
+        return true;
+    }
+
+    public static char[][] makeBoard(int n) {
+        char[][] board = new char[n][n];
+        for (int i = 0; i < board.length; i++)
+            for (int j = 0; j < board.length; j++)
+                board[i][j] = 'x';
+        return board;
     }
 
     public static void main(String[] args) {
-        int[][] matrix = {{0,1,2,3,4}, {5,6,7,8,9}, {10,11,12,13,14}, {15,16,17,18,19}};
-        findInMatrix(matrix, 19);
-     }
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Size of the grid: ");
+        int n = sc.nextInt();
+        char[][] board = makeBoard(n);
+        if (nQueens(board, 0)) {
+            printBoard(board);
+        } else {
+            System.out.println("not possible");
+        }
+    }
 }

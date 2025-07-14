@@ -10,9 +10,9 @@ public class MergeSortLL {
         }
     }
 
-    private Node head;
-    private Node tail;
-    private int size;
+    public Node head;
+    public Node tail;
+    public int size;
 
     public Node mergeSort(Node head) {
         if (head == null || head.next == null) {
@@ -22,7 +22,7 @@ public class MergeSortLL {
         // Find mid
         Node mid = getMid(head);
 
-        // left & right halg MS
+        // left & right half MS
         Node rightHead = mid.next;
         mid.next = null;
         Node newLeft = mergeSort(head);
@@ -32,7 +32,7 @@ public class MergeSortLL {
         return merge(newLeft, newRight);
     }
 
-    private Node merge(Node head1, Node head2) {
+    public Node merge(Node head1, Node head2) {
         Node mergedLL = new Node (-1);
         Node temp = mergedLL;
 
@@ -63,7 +63,7 @@ public class MergeSortLL {
         return mergedLL.next;
     }
 
-    private Node getMid(Node head) {
+    public Node getMid(Node head) {
         Node slow = head;
         Node fast = head.next; // This is a tiny difference.
 
@@ -75,7 +75,7 @@ public class MergeSortLL {
         return slow;
     }
 
-    private void addFirst(int data) {
+    public void addFirst(int data) {
         Node node = new Node(data);
         size++;
 
@@ -88,7 +88,7 @@ public class MergeSortLL {
         head = node;
     }
 
-    private void print() {
+    public void print() {
         if (head == null) {
             System.out.println("List is Empty.");
             return;
@@ -102,7 +102,7 @@ public class MergeSortLL {
         System.out.println();
     }
 
-    private void zigZag() {
+    public void zigZag() {
         // Find the mid
          Node slow = head;
          Node fast = head.next;

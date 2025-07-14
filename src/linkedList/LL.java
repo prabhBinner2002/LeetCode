@@ -58,6 +58,7 @@ public class LL {
 
         // Remove Cycle : lastNode.next = null
         prev.next = null;
+        tail = prev;
     }
 
     public static void main(String[] args) {
