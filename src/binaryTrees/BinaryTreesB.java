@@ -1,7 +1,5 @@
 package binaryTrees;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -34,7 +32,7 @@ public class BinaryTreesB {
 
         public static void preOrder(Node root) {
             if (root == null) {
-                System.out.print(-1 + " ");
+//                System.out.print(-1 + " ");
                 return;
             }
 
@@ -56,7 +54,7 @@ public class BinaryTreesB {
 
         public static void postOrder(Node root) {
             if (root == null) {
-                System.out.print(-1 + " ");
+//                System.out.print(-1 + " ");
                 return;
             }
 
@@ -99,7 +97,6 @@ public class BinaryTreesB {
 
             int lh = height(root.left);
             int rh = height(root.right);
-
             return Math.max(lh, rh) + 1;
         }
 
@@ -123,6 +120,7 @@ public class BinaryTreesB {
         int[] nodes = {1,2,4,-1,-1,5,-1,-1,3, 6,-1, -1,7,-1,-1};
         BinaryTree tree = new BinaryTree();
         Node root = tree.buildTree(nodes);
+        tree.inOrder(root);
 
         System.out.println(tree.height(root));
         System.out.println(tree.count(root));
