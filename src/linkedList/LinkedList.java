@@ -244,10 +244,11 @@ public class LinkedList {
 //        System.out.println(ll.checkPalindrome());
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(1);
-        ll.add(2, 2);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.add(4,5);
+        ll.addLast(6);
         ll.print();
-        System.out.println(ll.checkPalindrome());
 
     }
 }

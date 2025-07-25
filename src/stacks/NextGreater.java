@@ -8,7 +8,7 @@ public class NextGreater {
         int[] nextGreater = new int[arr.length];
 
         for (int i = arr.length - 1; i >= 0; i--) {
-            while (!s.isEmpty() && s.peek() <= arr[i]) {
+            while (!s.isEmpty() && arr[i] >= s.peek()) {
                 s.pop();
             }
             if (s.isEmpty()) {

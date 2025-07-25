@@ -1,134 +1,129 @@
 package binaryTrees;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class practice {
-    public static class Node {
+    static class Node {
         int data;
         Node left;
         Node right;
         public Node(int data) {
             this.data = data;
-            this.left = null;
-            this.right = null;
         }
     }
 
-    public static class BinaryTree {
-        public static int idx = -1;
-        public Node buildTree(int[] nodes) {
+    class BinaryTree {
+        static int idx = -1;
+        public static Node buildTree(int[] arr) {
             idx++;
 
-            if (nodes[idx] == -1) return null;
-
-            Node node = new Node(nodes[idx]);
-            node.left = buildTree(nodes);
-            node.right = buildTree(nodes);
-            return node;
+            if (arr[idx] == -1) return null;
+            Node root = new Node(arr[idx]);
+            root.left = buildTree(arr);
+            root.right = buildTree(arr);
+            return root;
         }
+    }
 
-        public void preOrder(Node root) {
-            if (root == null) return;
+    public static void preOrder(Node root) {
+        if (root == null) return;
 
-            System.out.print(root.data + " ");
-            preOrder(root.left);
-            preOrder(root.right);
-        }
+        System.out.print(root.data + " ");
+        preOrder(root.left);
+        preOrder(root.right);
+    }
 
-        public void inOrder(Node root) {
-            if (root == null) return;
+    public static void inOrder(Node root) {
+        if (root == null) return;
 
-            inOrder(root.left);
-            System.out.print(root.data + " ");
-            inOrder(root.right);
-        }
+        inOrder(root.left);
+        System.out.print(root.data + " ");
+        inOrder(root.right);
+    }
 
-        public void postOrder(Node root) {
-            if (root == null) return;
+    public static void postOrder(Node root) {
+        if (root == null) return;
 
-            postOrder(root.left);
-            postOrder(root.right);
-            System.out.print(root.data + " ");
-        }
+        postOrder(root.left);
+        postOrder(root.right);
+        System.out.print(root.data + " ");
+    }
 
-        public void levelOrder(Node root) {
-            if (root == null) return;
+    public static int height(Node root) {
+        if (root == null) return 0;
 
-            Queue<Node> q = new LinkedList<>();
-            q.add(root);
-            q.add(null);
+        int leftH = height(root.left);
+        int rightH = height(root.right);
 
-            while (!q.isEmpty()) {
-                Node curr = q.remove();
-                if (curr == null) {
-                    System.out.println();
-                    if (q.isEmpty()) {
-                        break;
-                    } else {
-                        q.add(null);
-                    }
-                } else {
-                    System.out.print(curr.data + " ");
-                    if (curr.left != null) {
-                        q.add(curr.left);
-                    } if (curr.right != null) {
-                        q.add(curr.right);
-                    }
-                }
+        return Math.max(leftH, rightH) + 1;
+    }
+
+    public static void levelOrder(Node root) {
+        if (root == null) return;
+
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+
+        while (!q.isEmpty()) {
+            Node currNode = q.remove();
+            if (currNode == null) {
+                System.out.println();
+                if (q.isEmpty()) break;
+                else q.add(null);
+            } else {
+                System.out.print(currNode.data);
+                if (currNode.left != null) q.add(currNode.left);
+                if (currNode.right != null) q.add(currNode.right);
             }
         }
+    }
 
-        public int height(Node root) {
-            if (root == null) return 0;
+    public static int count(Node root) {
+        if (root == null) return 0;
 
-            int lh = height(root.left);
-            int rh = height(root.right);
-            return Math.max(lh, rh) + 1;
-        }
+        int leftC = count(root.left);
+        int rightC = count(root.right);
 
-        public int count(Node root) {
-            if (root == null) return 0;
+        return leftC + rightC + 1;
+    }
 
-            int lc = count(root.left);
-            int rc = count(root.right);
-            return lc + rc + 1;
-        }
+    public static int sum(Node root) {
+        if (root == null) return 0;
 
-        public int sum(Node root) {
-            if (root == null) return 0;
+        int leftS = sum(root.left);
+        int rightS = sum(root.right);
 
-            int ls = sum(root.left);
-            int rs = sum(root.right);
-            return ls + rs + root.data;
-        }
-
-        public static boolean isUniversal(Node root) {
-            if (root == null) return true;
-
-            int data = root.data;
-
-            return dfs(root, data);
-        }
-
-        private static boolean dfs(Node node, int data) {
-            if (node == null) return true;
-
-            if (node.data != data) return false;
-
-            return dfs(node.left, data) && dfs(node.right, data);
-        }
+        return leftS + rightS + root.data;
     }
 
     public static void main(String[] args) {
         Node root = new Node(1);
-        root.left = new Node(1);
-        root.right = new Node(1);
-        root.left.left = new Node(1);
-        root.left.right = new Node(1);
-        root.right.left = new Node(1);
-        root.right.right = new Node(2);
+        root.left = new Node(2);
+        Node subRoot = root.left;
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.right = new Node(6);
 
-        System.out.println(BinaryTree.isUniversal(root));
+//        System.out.println(minDist(root, 4, 6)); // Number of Edges
+//        System.out.println(subTree(root, subRoot));
+//        System.out.println(getLCA(root, 4, 5).data);
+//        kthLevel(root, 1, 3);
+//        topView(root);
+//        System.out.println(diam(root).diameter); // Info stores height as well.
+//        System.out.println(count(root));
+//        System.out.println(height(root));
+//        preOrder(root);
+//        System.out.println();
+//        inOrder(root);
+//        System.out.println();
+//        postOrder(root);
+//        System.out.println();
+//        levelOrder(root);
     }
 }

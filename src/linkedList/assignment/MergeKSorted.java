@@ -36,6 +36,34 @@ public class MergeKSorted {
     }
 
     public static void main(String[] args) {
+        MergeKSorted merger = new MergeKSorted();
 
+        // Create 3 sorted linked lists
+        Node l1 = new Node(1);
+        l1.next = new Node(4);
+        l1.next.next = new Node(7);
+
+        Node l2 = new Node(2);
+        l2.next = new Node(5);
+        l2.next.next = new Node(8);
+
+        Node l3 = new Node(3);
+        l3.next = new Node(6);
+        l3.next.next = new Node(9);
+
+        // Put lists into array
+        Node[] lists = {l1, l2, l3};
+
+        // Merge all lists
+        Node mergedHead = merger.mergeKLists(lists);
+
+        // Print merged linked list
+        System.out.print("Merged List: ");
+        Node temp = mergedHead;
+        while (temp != null) {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
     }
 }
