@@ -1,10 +1,7 @@
 package binaryTrees;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class practice {
     static class Node {
@@ -83,39 +80,49 @@ public class practice {
         }
     }
 
-    public static int count(Node root) {
-        if (root == null) return 0;
+    public static int kthAncestor(Node root, int n, int k) {
+        if (root == null) return -1;
 
-        int leftC = count(root.left);
-        int rightC = count(root.right);
+        if (root.data == n) return 0;
 
-        return leftC + rightC + 1;
-    }
+        int left = kthAncestor(root.left, n, k);
+        int right = kthAncestor(root.right, n, k);
 
-    public static int sum(Node root) {
-        if (root == null) return 0;
+        if (left == -1 && right == -1) return -1;
 
-        int leftS = sum(root.left);
-        int rightS = sum(root.right);
+        int max = Math.max(left, right);
+        if (max + 1 == k) {
+            return root.data;
+        }
 
-        return leftS + rightS + root.data;
+        return max + 1;
     }
 
     public static void main(String[] args) {
+//        Node root = new Node(1);
+//        root.left = new Node(2);
+//        root.right = new Node(3);
+//        root.left.left = new Node(4);
+//        root.left.right = new Node(5);
+//        root.right.right = new Node(6);
+//        Node subRoot = new Node(1);
+//        subRoot.left = new Node(1);
+//        subRoot.right = new Node(5);
         Node root = new Node(1);
         root.left = new Node(2);
-        Node subRoot = root.left;
-        root.right = new Node(3);
-        root.left.left = new Node(4);
-        root.left.right = new Node(5);
-        root.right.right = new Node(6);
+        root.left.right = new Node(3);
+        root.left.right.left = new Node(4);
+        root.left.right.right = new Node(5);
+        root.left.right.right.right = new Node(5);
+        System.out.println(kthAncestor(root, 3, 1));
 
 //        System.out.println(minDist(root, 4, 6)); // Number of Edges
-//        System.out.println(subTree(root, subRoot));
-//        System.out.println(getLCA(root, 4, 5).data);
-//        kthLevel(root, 1, 3);
-//        topView(root);
-//        System.out.println(diam(root).diameter); // Info stores height as well.
+//        System.out.println(hasSubTree(root, subRoot));
+//        System.out.println(getLca(root, 2, 5).data);
+//        System.out.println(kthLevel(root, 3));
+//        ArrayList<Integer> ans = topView(root);
+//        System.out.println(ans);
+//        System.out.println(diam(root).diam); // Info stores height as well.
 //        System.out.println(count(root));
 //        System.out.println(height(root));
 //        preOrder(root);
