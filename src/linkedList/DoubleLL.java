@@ -76,7 +76,7 @@ public class DoubleLL {
 
         Node prev = head;
         int i = 0;
-        while (i < size - 2) {
+        while (i <= size - 1) {
             prev = prev.next;
         }
 

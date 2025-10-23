@@ -50,7 +50,7 @@ public class BSTb {
     public static Node delete(Node root, int val) {
         if(root.data < val) root.right = delete(root.right, val);
         else if(root.data > val) root.left = delete(root.left, val);
-        else { // Voila : We found the node to delete.
+        else { // Voilà : We found the node to delete.
             // Case 1 : Leaf Node
             if (root.left == null && root.right == null) return null;
 

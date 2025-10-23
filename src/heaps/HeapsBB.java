@@ -33,13 +33,11 @@ public class HeapsBB {
             int right = 2 * i + 2;
             int minIdx = i;
 
-            if (left < arr.size() && arr.get(minIdx) > arr.get(left)) {
+            if (left < arr.size() && arr.get(minIdx) > arr.get(left))
                 minIdx = left;
-            }
 
-            if (right < arr.size() && arr.get(minIdx) > arr.get(right)) {
+            if (right < arr.size() && arr.get(minIdx) > arr.get(right))
                 minIdx = right;
-            }
 
             if (minIdx != i) {
                 // Swap

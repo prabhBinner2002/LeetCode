@@ -1,57 +1,52 @@
 package queue;
 
+import java.util.NoSuchElementException;
+
 public class QueueLL {
-    static class Node {
-        int data;
-        Node next;
-        public Node(int data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
     static class Queue {
-        static Node head = null;
-        static Node tail = null;
+        // Put Node INSIDE Queue
+        private static class Node {
+            int data;
+            Node next;
 
-        public static boolean isEmpty() {
-            return head == null && tail == null;
+            Node(int data) {
+                this.data = data;
+            }
         }
 
-        public static void add(int data) { //O(1)
-            Node newNode = new Node(data);
+        private Node head = null;
+        private Node tail = null;
 
+        public boolean isEmpty() {
+            return head == null;
+        }
+
+        public void add(int data) { // O(1)
+            Node newNode = new Node(data);  // ✅ Now works fine
             if (head == null) {
                 head = tail = newNode;
-                return;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
             }
-
-            tail.next = newNode;
-            tail = newNode;
         }
 
-        public static int remove() { // O(n)
+        public int remove() { // O(1)
             if (isEmpty()) {
-                System.out.println("Queue is Empty");
-                return -1;
+                throw new NoSuchElementException("Queue is empty");
             }
-
             int front = head.data;
-            if (tail == head) {
-                tail = head = null;
-            } else {
-                head = head.next;
+            head = head.next;
+            if (head == null) {
+                tail = null;
             }
-
             return front;
         }
 
-        public static int peek() {
+        public int peek() {
             if (isEmpty()) {
-                System.out.println("Queue is Empty");
-                return -1;
+                throw new NoSuchElementException("Queue is empty");
             }
-
             return head.data;
         }
     }

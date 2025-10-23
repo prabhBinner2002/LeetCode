@@ -1,7 +1,5 @@
 package queue;
 
-import com.sun.security.jgss.GSSUtil;
-
 public class CircularQueue {
     static class Queue {
         static int[] arr;
@@ -53,7 +51,7 @@ public class CircularQueue {
                 front = (front + 1) % size;
             }
 
-            return front;
+            return res;
         }
 
         public static int peek() { // O(1)
@@ -67,7 +65,7 @@ public class CircularQueue {
     }
 
     public static void main(String[] args) {
-        QueueB.Queue q = new QueueB.Queue(3);
+        Queue q = new Queue(3);
         q.add(1);
         q.add(2);
         q.add(3);
