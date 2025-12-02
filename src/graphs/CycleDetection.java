@@ -57,10 +57,11 @@ public class CycleDetection {
     public static boolean detectCycle(ArrayList<Edge>[] graph) {
         boolean[] vis = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
-            if(!vis[i])
+            if(!vis[i]) {
                 if (util(graph, vis, i, -1)) {
                     return true; // cycle exists in one of the component
                 }
+            }
         }
         return false;
     }
@@ -111,9 +112,9 @@ public class CycleDetection {
     }
 
     public static void main(String[] args) {
-        int v = 4;
+        int v = 5;
         ArrayList<Edge>[] graph = new ArrayList[v];
-        createGraphDirected(graph);
+        createGraphUndirected(graph);
 
         System.out.println(isCycle(graph));
     }

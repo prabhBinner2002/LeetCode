@@ -76,7 +76,7 @@ public class Traversal {
         Queue<Integer>q= new LinkedList<>();
         q.add(0);
         vis[0]=1;
-        while( q.size()>0 )
+        while(!q.isEmpty())
         {
              int curr= q.remove();
              ans.add( curr);

@@ -7,6 +7,7 @@ public class QuickSortCC {
         if (si >= ei) return;
 
         int pivotIndex = partition(arr, si, ei);
+        System.out.println(pivotIndex);
         quickSort(arr, si, pivotIndex - 1);
         quickSort(arr, pivotIndex + 1, ei);
     }
@@ -34,7 +35,8 @@ public class QuickSortCC {
     }
 
     public static void main(String[] args) {
-        int[] arr = {6,3,9,8,2,5};
+        int[] arr = {1,2,3,4};
+//        int[] arr = {4,4,4,4};
         qs(arr, 0 , arr.length - 1);
         printArr(arr);
     }
@@ -43,6 +45,7 @@ public class QuickSortCC {
         if (si >= ei) return;
 
         int privotIdx = getPivot(arr, si, ei);
+        System.out.println(privotIdx);
         qs(arr, si, privotIdx - 1);
         qs(arr, privotIdx + 1, ei);
     }
@@ -64,5 +67,6 @@ public class QuickSortCC {
         arr[i] = pivot;
 
         return i;
+//        return i != ei ? i : (si + ei) / 2;
     }
 }

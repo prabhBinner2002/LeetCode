@@ -107,13 +107,36 @@ public class AVLTrees {
         preOrder(root.right);
     }
 
+    public static void printTree(Node root, String prefix, boolean isLeft) {
+        if (root != null) {
+            // Print right subtree first (for sideways view)
+            printTree(root.right, prefix + (isLeft ? "│   " : "    "), false);
+
+            // Print current node
+            System.out.println(prefix + (isLeft ? "└── " : "┌── ") + root.data);
+
+            // Print left subtree
+            printTree(root.left, prefix + (isLeft ? "    " : "│   "), true);
+        }
+    }
+
     public static void main(String[] args) {
         root = insert(root, 10);
         root = insert(root, 20);
         root = insert(root, 30);
         root = insert(root, 40);
         root = insert(root, 50);
+        System.out.println();
+        System.out.println();
+        printTree(root, "", true);
         root = insert(root, 25);
+        root = insert(root, 22);
+        root = insert(root, 12);
+        System.out.println();
+        System.out.println();
+        printTree(root, "", true);
+        root = insert(root, 2);
+        root = insert(root, 4);
 
         /*               AVL Tree :
                             30
@@ -123,6 +146,8 @@ public class AVLTrees {
                        10    25   50
          */
 
-        preOrder(root);
+        System.out.println();
+        System.out.println();
+        printTree(root, "", true);
     }
 }
