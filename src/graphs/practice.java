@@ -64,49 +64,57 @@ public class practice {
         }
     }
 
-    record Pair(int v, int d) implements Comparable<Pair> {
+    record Pair(int v, int cost) implements Comparable<Pair> {
         @Override
         public int compareTo(Pair other) {
-            return Integer.compare(this.d, other.d);
+            return Integer.compare(this.cost, other.cost);
         }
     }
 
-    public static void dijkstra(ArrayList<Edge>[] graph, int src) {
-        int[] dist = new int[graph.length];
-        int[] vis = new int[graph.length];
-
-        PriorityQueue<Pair> pq = new PriorityQueue<>();
-
-        for (int i = 0; i < graph.length; i++) {
-            if (i != src) {
-                dist[i] = Integer.MAX_VALUE;
+    class Solution {
+        static class Pair {
+            int r, c, t;
+            Pair(int r, int c, int t) {
+                this.r = r;
+                this.c = c;
+                this.t = t;
             }
         }
 
-        pq.add(new Pair(src, 0));
+        public int orangesRotting(int[][] grid) {
+            int[] dr = {-1,1,0,0};
+            int[] dc = {0,0,-1,1};
+            int fresh = 0;
+            int timer = 0;
 
-        while (!pq.isEmpty()) {
-            Pair curr = pq.poll();
+            Queue<Pair> q = new LinkedList<>();
 
-            if (vis[curr.v()] == 0) {
-                vis[curr.v()] = 1;
+            for (int i = 0; i < grid.length; i++) {
+                for (int j = 0; j < grid.length; j++) {
+                    if (grid[i][j] == 2) q.add(new Pair(i, j, 0));
+                    else if (grid[i][j] == 1) fresh++;
+                }
+            }
 
-                for (int i = 0; i < graph[curr.v()].size(); i++) {
-                    Edge e = graph[curr.v()].get(i);
-                    int u = e.src;
-                    int v = e.dest;
-                    int wt= e.weight;
+            while (!q.isEmpty()) {
+                Pair p = q.remove();
+                timer = p.t;
 
-                    if (dist[v] > dist[u] + wt) {
-                        dist[v] = dist[u] + wt;
-                        pq.add(new Pair(e.dest, dist[v]));
+                for (int i = 0 ; i < 4; i++) {
+                    int nr = p.r + dr[i];
+                    int nc = p.c + dc[i];
+
+                    if (nr >= 0 && nc >= 0 &&
+                            nr < grid.length && nc < grid[0].length &&
+                            grid[nr][nc] == 1) {
+                        fresh--; // to check corner case
+                        grid[nr][nc] = 2; // visited
+                        q.add(new Pair(nr, nc, timer + 1));
                     }
                 }
             }
-        }
 
-        for (int i : dist) {
-            System.out.print(i + " ");
+            return fresh >= 1 ? -1 : timer;
         }
     }
 
@@ -115,7 +123,7 @@ public class practice {
         ArrayList<Edge>[] graph = new ArrayList[V];
         createGraph(graph);
 
-        dijkstra(graph, 0);
+
 
 //        int v = 6;
 //        List<List<Integer>> adj = new ArrayList<>();

@@ -54,6 +54,30 @@ public class CycleDetection {
         graph[2].add(new Edge(2,3));
     }
 
+    record Pair(int src, int parent) {}
+
+    public static boolean cycleBfs(List<List<Integer>> graph) {
+        boolean[] vis = new boolean[graph.size()];
+        Queue<Pair> q = new LinkedList<>();
+
+        q.offer(new Pair(0, -1));
+
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+            vis[p.src] = true;
+
+            for (int neigh : graph.get(p.src)) {
+                if (!vis[neigh]) {
+                    return q.offer(new Pair(neigh, p.src));
+                } else if (neigh == p.parent){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public static boolean detectCycle(ArrayList<Edge>[] graph) {
         boolean[] vis = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
