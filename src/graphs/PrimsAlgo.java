@@ -45,6 +45,57 @@ public class PrimsAlgo {
         }
     }
 
+    public static void primMSTpATH(ArrayList<Edge>[] graph) {
+        int V = graph.length;
+        boolean[] vis = new boolean[V];
+        int[] parent = new int[V];      // To print the MST edges
+        int[] minCost = new int[V];     // Weight to connect each vertex to MST
+
+        // Initialize all keys to +infinity
+        for (int i = 0; i < V; i++) {
+            minCost[i] = Integer.MAX_VALUE;
+            parent[i] = -1;
+        }
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        minCost[0] = 0;
+        pq.add(new Pair(0, 0));
+
+        int finalCost = 0;
+
+        while (!pq.isEmpty()) {
+            Pair curr = pq.remove();
+            int u = curr.v;
+
+            if (vis[u]) continue;
+            vis[u] = true;
+
+            finalCost += curr.cost;
+
+            // Explore neighbors
+            for (Edge e : graph[u]) {
+                int v = e.dest;
+                int wt = e.weight;
+
+                // If v is NOT visited and wt < minCost[v], update
+                if (!vis[v] && wt < minCost[v]) {
+                    minCost[v] = wt;
+                    parent[v] = u;      // Store edge u → v in MST
+                    pq.add(new Pair(v, wt));
+                }
+            }
+        }
+
+        // PRINT MST EDGES
+        System.out.println("Edges in MST:");
+        for (int i = 1; i < V; i++) {
+            System.out.println(parent[i] + " -> " + i + " (weight " + minCost[i] + ")");
+        }
+
+        System.out.println("Final Minimum Cost: " + finalCost);
+    }
+
+
     public static void primMST(ArrayList<Edge>[] graph) {
         boolean vis[] = new boolean[graph.length];
         PriorityQueue<Pair> pq = new PriorityQueue<>();
@@ -56,6 +107,7 @@ public class PrimsAlgo {
             Pair curr = pq.remove();
             if (!vis[curr.v]) {
                 vis[curr.v] = true;
+                System.out.print(curr.v);
 
                 finalCost += curr.cost;
 
@@ -74,6 +126,6 @@ public class PrimsAlgo {
         ArrayList<Edge>[] graph = new ArrayList[V];
         createGraph(graph);
 
-        primMST(graph);
+        primMSTpATH(graph);
     }
 }

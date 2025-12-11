@@ -69,7 +69,7 @@ public class CycleDetection {
             for (int neigh : graph.get(p.src)) {
                 if (!vis[neigh]) {
                     return q.offer(new Pair(neigh, p.src));
-                } else if (neigh == p.parent){
+                } else if (neigh != p.parent){
                     return true;
                 }
             }
