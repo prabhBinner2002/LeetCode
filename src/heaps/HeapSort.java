@@ -31,7 +31,7 @@ public class HeapSort {
         }
 
         // Step 2: Push largest to end
-        for (int i = n - 1; i >= 0; i--) {
+        for (int i = n - 1; i > 0; i--) {
             // Swap (largest-first with last)
             int temp = arr[0];
             arr[0] = arr[i];
@@ -42,7 +42,7 @@ public class HeapSort {
     }
 
     public static void main(String[] args) {
-        int[] arr = {1,2,4,5,3};
+        int[] arr = {2,4,5,3,12,12,43,35,45,1};
         heapSort(arr);
         for(int i: arr) {
             System.out.print(i + " ");

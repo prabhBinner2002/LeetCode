@@ -110,30 +110,42 @@ public class BellManFord {
     }
 
     public static void bellmanFordSimple(ArrayList<Edge> graph, int src, int V) {
-        int[] dist = new int[V];
+        long[] dist = new long[V];
+        Arrays.fill(dist, Long.MAX_VALUE);
+        dist[src] = 0;
 
-        for (int i = 0; i < dist.length; i++) {
-            if (i != src)
-                dist[i] = Integer.MAX_VALUE;
-        }
-
-        //TC : O(VE)
+        // Relax edges V - 1 times
         for (int i = 0; i < V - 1; i++) {
-            for (int j = 0; j < graph.size(); j++) {
-                    Edge e = graph.get(j);
-                    int u = e.src;
-                    int v = e.dest;
-                    int wt = e.weight;
+            for (Edge e : graph) {
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.weight;
 
-                    if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v])
-                        dist[v] = dist[u] + wt;
+                if (dist[u] != Long.MAX_VALUE && dist[u] + wt < dist[v]) {
+                    dist[v] = dist[u] + wt;
+                }
             }
         }
 
-        for (int i : dist) {
-            System.out.print(i + " ");
+        // Negative cycle check
+        for (Edge e : graph) {
+            int u = e.src;
+            int v = e.dest;
+            int wt = e.weight;
+
+            if (dist[u] != Long.MAX_VALUE && dist[u] + wt < dist[v]) {
+                System.out.println("Negative cycle detected");
+                return;
+            }
         }
 
+        // Print distances
+        for (int i = 0; i < V; i++) {
+            if (dist[i] == Long.MAX_VALUE)
+                System.out.print("INF ");
+            else
+                System.out.print(dist[i] + " ");
+        }
         System.out.println();
     }
 

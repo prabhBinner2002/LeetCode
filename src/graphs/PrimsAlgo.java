@@ -95,7 +95,6 @@ public class PrimsAlgo {
         System.out.println("Final Minimum Cost: " + finalCost);
     }
 
-
     public static void primMST(ArrayList<Edge>[] graph) {
         boolean vis[] = new boolean[graph.length];
         PriorityQueue<Pair> pq = new PriorityQueue<>();

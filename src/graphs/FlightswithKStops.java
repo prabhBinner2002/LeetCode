@@ -1,6 +1,7 @@
 package graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -29,37 +30,31 @@ public class FlightswithKStops {
         createGraph(graph, flights);
 
         int[] dist = new int[n];
-        for (int i = 0; i < n; i++) {
-            if (i != src) {
-                dist[i] = Integer.MAX_VALUE;
-            }
-        }
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
 
         Queue<Info> q = new LinkedList<>();
         q.add(new Info(src, 0, 0));
 
         while (!q.isEmpty()) {
             Info curr = q.remove();
-            if (curr.stops > k) break;
 
-            for (Edge e: graph[curr.vertex]) {
-                int u = e.src;
+            if (curr.stops > k) continue;
+
+            for (Edge e : graph[curr.vertex]) {
                 int v = e.dest;
                 int wt = e.wt;
 
-                if (dist[v] > curr.cost + wt && curr.stops <= k) {
-                    dist[v] = dist[u] + wt;
+                if (dist[v] > curr.cost + wt) {
+                    dist[v] = curr.cost + wt;
                     q.add(new Info(v, dist[v], curr.stops + 1));
                 }
             }
         }
 
-        if (dist[dest] == Integer.MAX_VALUE) {
-            return -1;
-        } else {
-            return dist[dest];
-        }
+        return dist[dest] == Integer.MAX_VALUE ? -1 : dist[dest];
     }
+
 
     public static void main(String[] args) {
         int n = 4;
