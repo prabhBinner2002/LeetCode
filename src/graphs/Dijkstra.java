@@ -1,7 +1,6 @@
 package graphs;
 
-import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Dijkstra {
     static class Edge {
@@ -53,7 +52,8 @@ public class Dijkstra {
         }
     }
 
-    public static void dijkstra(ArrayList<Edge>[] graph, int src) {
+    public static void dijkstra(ArrayList<Edge>[] graph, int src /*, int dest */) {
+        int dest = 0;
         int dist[] = new int[graph.length]; // dist[i] -> src to i
         boolean vis[] = new boolean[graph.length];
         for (int i = 0; i < graph.length; i++) {
@@ -64,20 +64,28 @@ public class Dijkstra {
 
         PriorityQueue<Pair> pq = new PriorityQueue<>();
         pq.add(new Pair(src, 0));
+        int[] parent = new int[graph.length];
+        Arrays.fill(parent, -1);
 
         // BFS
         while(!pq.isEmpty()) {
             Pair curr = pq.poll();
             if (!vis[curr.n]) {
                 vis[curr.n] = true;
+
+                // Single source to a single target: Early stop
+                // if (curr.n == dest) return dist[dest];
+
                 for (int i = 0; i < graph[curr.n].size(); i++) {
                     Edge e = graph[curr.n].get(i);
                     int u = e.src;
                     int v = e.dest;
                     int wt = e.weight;
 
-                    if (dist[u] + wt < dist[v]) { // update the dist of v from source
+                    // To Prevent Integer overflow which in turns result in negative number.
+                    if (dist[u] != Integer.MAX_VALUE && dist[u] + wt < dist[v]) { // update the dist of v from source
                         dist[v] = dist[u] + wt;
+                        parent[v] = u;
                         pq.add(new Pair(v, dist[v]));
                     }
                 }
@@ -89,9 +97,18 @@ public class Dijkstra {
             System.out.print(dist[i] + " ");
         }
 
+        List<Integer> path = new ArrayList<>();
+        for (int curr = dest; curr != -1; curr = parent[curr]) {
+            path.add(curr);
+        }
+
+        Collections.reverse(path);
+        // print(path);
+
         System.out.println();
 
     }
+
 
     public static void main(String[] args) {
         int V = 6;

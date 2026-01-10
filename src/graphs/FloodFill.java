@@ -16,17 +16,26 @@ public class FloodFill {
         vis[sr][sc] = true;
         image[sr][sc] = color;
 
-        // left
-        helper(image, sr, sc - 1, color, vis, originalColor);
+//        // left
+//        helper(image, sr, sc - 1, color, vis, originalColor);
+//
+//        // right
+//        helper(image, sr, sc + 1, color, vis, originalColor);
+//
+//        // up
+//        helper(image, sr - 1, sc, color, vis, originalColor);
+//
+//        // down
+//        helper(image, sr + 1, sc, color, vis, originalColor);
 
-        // right
-        helper(image, sr, sc + 1, color, vis, originalColor);
+        int[][] moves = {{1,0}, {-1, 0}, {0, -1}, {0, 1}};
 
-        // up
-        helper(image, sr - 1, sc, color, vis, originalColor);
+        for (int i = 0; i < 4; i++) {
+            int nr = sr + moves[i][0];
+            int nc = sc + moves[i][1];
 
-        // down
-        helper(image, sr + 1, sc, color, vis, originalColor);
+            helper(image, nr, nc, color, vis, originalColor);
+        }
     }
 
     public static void main(String[] args) {

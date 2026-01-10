@@ -1,42 +1,103 @@
 package graphs;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class WordLadder {
     public static int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        boolean[] vis = new boolean[wordList.size()];
-        int num = 0;
+        Set<String> set = new HashSet<>(wordList);
+        if (!set.contains(endWord)) return 0;
+
+        Queue<String> q = new LinkedList<>();
+
+        q.offer(beginWord);
+        set.remove(beginWord);
+
+        int level = 1;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+
+            for (int i = 0; i < size; i++) {
+                String curr = q.poll();
+
+                if (endWord.equals(curr)) return level;
+
+                char[] word = curr.toCharArray();
+
+                for (int j = 0; j < word.length; j++) {
+                    char original = word[j];
+
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        word[j] = ch;
+
+                        String w = new String(word);
+                        if (set.contains(w)) {
+                            q.offer(w);
+                            set.remove(w);
+                        }
+                        word[j] = original;
+                    }
+
+                }
+            }
+
+            level++;
+        }
+
+        return 0;
+    }
+
+    public static List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> ans = new ArrayList<>();
+
+        Set<String> set = new HashSet<>(wordList);
+        if (!set.contains(endWord)) return ans;
 
         Queue<String> q = new LinkedList<>();
         q.offer(beginWord);
+        set.remove(endWord);
+
+        int level = 0;
+
+        ans.add(new ArrayList<>());
 
         while (!q.isEmpty()) {
-            String word = q.poll();
+            int size = q.size();
 
-            for (int i = 0; i < word.length(); i++) {
-                StringBuilder newWord = new StringBuilder(word);
-                for (char ch = 'a'; ch <= 'z'; ch++) {
-                    newWord.setCharAt(i, ch);
-                    if (wordList.contains(newWord.toString())) {
-                        System.out.print(newWord + " ");
-                        if (newWord.toString().equals(endWord)) {
-                            break;
+
+            for (int i = 0; i < size; i++) {
+                String curr = q.poll();
+                ans.get(0).add(curr);
+
+                if (endWord.equals(curr)) {
+                    ans.get(0).add(endWord);
+                    return ans;
+                };
+
+                char[] word = curr.toCharArray();
+
+                for (int j = 0; j < word.length; j++) {
+                    char old = word[j];
+
+                    for (char ch = 'a'; ch <= 'z'; ch++) {
+                        word[j] = ch;
+
+                        String w = new String(word);
+
+                        if (set.contains(w)) {
+                            q.offer(w);
+                            set.remove(w);
                         }
-                        int idx = wordList.indexOf(newWord.toString());
-                        if (!vis[idx]) {
-                            vis[idx] = true;
-                            num++;
-                            q.add(newWord.toString());
-                        }
+
+                        word[j] = old;
                     }
                 }
             }
+
+            level++;
         }
 
-        return num;
+        return ans;
     }
 
     public static void main(String[] args) {
@@ -50,6 +111,6 @@ public class WordLadder {
         wordList.add("log");
         wordList.add("cog");
 
-        System.out.println(ladderLength(beginWord, endWord, wordList));
+        System.out.println(findLadders(beginWord, endWord, wordList));
     }
 }

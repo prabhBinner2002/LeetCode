@@ -20,15 +20,15 @@ public class Kahn$TopSortBFS {
             graph[i] = new ArrayList<>();
         }
 
-        graph[2].add(new Edge(2, 3));
+        graph[2].add(new Edge(2, 5));
 
-        graph[3].add(new Edge(3, 1));
+        graph[3].add(new Edge(0, 1));
 
-        graph[4].add(new Edge(4, 0));
-        graph[4].add(new Edge(4, 1));
+        graph[4].add(new Edge(0, 2));
+        graph[4].add(new Edge(3, 4));
 
-        graph[5].add(new Edge(5,0));
-        graph[5].add(new Edge(5,2));
+        graph[5].add(new Edge(4,2));
+//        graph[5].add(new Edge(5,2));
     }
 
     public static void calIndegree(ArrayList<Edge>[] graph, int[] indeg) {
