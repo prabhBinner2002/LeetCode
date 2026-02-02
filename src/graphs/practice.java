@@ -36,6 +36,85 @@ public class practice {
         graph[4].add(new Edge(4,5,5));
     }
 
+    record P(int curr, int cost) implements Comparable<P> {
+        @Override
+        public int compareTo(P p) {
+            return this.cost - p.cost;
+        }
+    }
+
+    public static int dijkstra(List<List<Integer[]>> graph, int src, int dest) {
+        int[] dis = new int[graph.size()];
+        int[] par = new int[graph.size()];
+        PriorityQueue<P> q = new PriorityQueue<>();
+
+        Arrays.fill(dis, Integer.MAX_VALUE);
+        dis[src] = 0;
+        par[src] = -1;
+
+        q.offer(new P(src, 0));
+
+        while (!q.isEmpty()) {
+            P curr = q.poll();
+
+            if (curr.cost != dis[curr.curr]) continue;
+
+            if (curr.curr == dest) break;
+
+            for (Integer[] list : graph.get(curr.curr)) {
+                    if (dis[list[0]] > dis[curr.curr] + list[1]) {
+                        dis[list[0]] = dis[curr.curr] + list[1];
+                        q.offer(new P(list[0], dis[list[0]]));
+                        par[list[0]] = curr.curr;
+                    }
+            }
+        }
+
+        if (dis[dest] == Integer.MAX_VALUE) {
+            System.out.println("No path");
+            return Integer.MAX_VALUE; // or return -1;
+        }
+
+        ArrayList<Integer> path = new ArrayList<>();
+
+        for (int i = dest; i != -1; i = par[i]) {
+            path.add(i);
+        }
+
+        Collections.reverse(path);
+        System.out.println(path);
+
+        return dis[dest];
+    }
+
+    public static boolean detectCycle(ArrayList<Edge>[] graph) {
+        boolean[] vis = new boolean[graph.length];
+
+        for (int i = 0; i < vis.length; i++) {
+            if (!vis[i]) {
+                if (util(graph, vis, i, -1)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean util(ArrayList<Edge>[] graph, boolean[] vis, int curr, int par) {
+        vis[curr] = true;
+
+        for (Edge e: graph[curr]) {
+            int src = e.src;
+            int dest = e.dest;
+            if (!vis[dest]) {
+                if (util(graph, vis, dest, src)) return true;
+            } else if (e.dest != par) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static void topSort(List<List<Integer>> g) {
         int[] indegree = new int[g.size()];
 
