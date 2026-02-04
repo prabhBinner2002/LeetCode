@@ -32,10 +32,17 @@ public class WildCardMatching {
             }
         }
 
+        for (boolean[] row : dp) {
+            for (boolean val : row) {
+                System.out.print(val + "   ");
+            }
+            System.out.println();
+        }
+
         return dp[n][m];
     }
 
     public static void main(String[] args) {
-        System.out.println(isMatch("abc", "**"));
+        System.out.println(isMatch("abc", "**?b*"));
     }
 }

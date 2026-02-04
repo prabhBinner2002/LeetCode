@@ -29,10 +29,17 @@ public class EditDistance {
             }
         }
 
+        for (int[] row : dp) {
+            for (int val : row) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
+
         return dp[n][m];
     }
 
     public static void main(String[] args) {
-        System.out.println(editDistance("intention", "execution"));
+        System.out.println(editDistance("abc", "ebg"));
     }
 }
